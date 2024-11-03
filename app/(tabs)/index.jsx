@@ -1,9 +1,9 @@
 import { View, Text, Pressable, Touchable, StyleSheet } from 'react-native'
 import React, { useEffect } from 'react'
-import services from '../utils/services'
+import services from './../../utils/services'
 import {useRouter} from 'expo-router'
 import { Button } from 'react-native-web'
-import { client } from '../utils/KindeConfig'
+import { client } from './../../utils/KindeConfig'
 import { TouchableOpacity } from 'react-native'
 
 
