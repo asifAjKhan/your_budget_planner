@@ -2,9 +2,26 @@ import { View, Text, Image , StyleSheet, TouchableOpacity} from 'react-native'
 import React from 'react'
 import logInImg from '../../assets/images/login_img.png'
 import Colors from '../../utils/Colors'
-
+import { client } from '../../utils/KindeConfig'
+import services from '../../utils/services'
+import { useRouter } from 'expo-router'
 
 export default function LoginScreen() {
+
+  const router = useRouter()
+
+  const handleSignIn = async () => {
+    const token = await client.login();
+    if (token) {
+      // User was authenticated
+      await services.storeData('login', 'true')
+      router.replace('/')
+    }
+  };
+
+  
+
+
   return (
     <View style={{
       display : 'flex',
@@ -41,12 +58,17 @@ export default function LoginScreen() {
             Stay on Track , Event by Event : Your Personal Budget Planner app!
           </Text>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button}
+          onPress={handleSignIn}>
             <Text style={{
               textAlign : 'center',
               color : Colors.PRIMARY
               }}> Login/Signup</Text>
           </TouchableOpacity>
+
+          <Text style={{fontSize : 13, color : Colors.GRAY, marginTop : 10 }}>By login/signup you aggree to your terms and condition</Text>
+
+
       </View>
 
     </View>
@@ -70,6 +92,9 @@ const styles = StyleSheet.create({
     backgroundColor : Colors.WHITE,
     padding : 8,
     paddingHorizontal : 5,
+    borderRadius : 99,
+    marginTop : 30
+
 
   }
 })
