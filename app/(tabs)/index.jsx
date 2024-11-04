@@ -5,6 +5,7 @@ import {useRouter} from 'expo-router'
 import { Button } from 'react-native-web'
 import { client } from './../../utils/KindeConfig'
 import { TouchableOpacity } from 'react-native'
+import {supabase} from '../../utils/SupabaseConfig'
 
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
 
     useEffect(() => {
       checkUserAuth();
+      getCategoryList();
     }, [])
 
     const checkUserAuth = async () => {
@@ -37,6 +39,17 @@ export default function Home() {
         // User was logged out
       }
     };
+
+   const getCategoryList = async () => {
+
+    const user = await client.getUserDetails();
+    const {data, error} = await supabase.from('Category')
+    .select('*')
+    .eq('created_by', user.email)
+
+    console.log("data", data)
+
+   } 
 
 
 
