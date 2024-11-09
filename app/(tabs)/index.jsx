@@ -6,6 +6,9 @@ import { Button } from 'react-native-web'
 import { client } from './../../utils/KindeConfig'
 import { TouchableOpacity } from 'react-native'
 import {supabase} from '../../utils/SupabaseConfig'
+import Header from '../../components/Header'
+import Colors from '../../utils/Colors'
+import CircularChart from '../../components/CircularChart'
 
 
 export default function Home() {
@@ -55,13 +58,10 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <Text>Home</Text>
       
-      <TouchableOpacity 
-         onPress={handleLogout} 
-      >
-        <Text style={styles.button}>Logout</Text>
-      </TouchableOpacity >
+      
+      <Header />
+      <CircularChart />
       
     </View>
   )
@@ -71,6 +71,9 @@ const styles = StyleSheet.create({
 
   container : {
     marginTop : 30,
+    padding : 20,
+    backgroundColor : Colors.PRIMARY,
+    height : 150
   },
 
   button : {
