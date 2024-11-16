@@ -2,6 +2,8 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import Colors from '../utils/Colors'
 import { TouchableOpacity } from 'react-native'
+import { TextInput } from 'react-native-web'
+
 
 const ColorPicker = ({selectedColor, setSelectedColor}) => {
   return (
@@ -9,8 +11,11 @@ const ColorPicker = ({selectedColor, setSelectedColor}) => {
      style={{
         display : 'flex',
         flexDirection : 'row',
-        gap : 20,
-        marginTop : 20
+        gap : 10,
+        marginTop : 20,
+        flexWrap : 'wrap',
+        marginLeft : 10
+        
      }}
     >
       {Colors.COLOR_LIST.map((color, index) =>(
@@ -27,6 +32,8 @@ const ColorPicker = ({selectedColor, setSelectedColor}) => {
 
         </TouchableOpacity>
       ))}
+
+     
     </View>
   )
 }
