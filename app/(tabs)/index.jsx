@@ -1,5 +1,5 @@
 import { View, Text, Pressable, Touchable, StyleSheet } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import services from './../../utils/services'
 import {Link, useRouter} from 'expo-router'
 import { Button } from 'react-native-web'
@@ -10,10 +10,13 @@ import Header from '../../components/Header'
 import Colors from '../../utils/Colors'
 import CircularChart from '../../components/CircularChart'
 import Ionicons from '@expo/vector-icons/Ionicons';
+import CategoryList from '../../components/CategoryList'
 
 
 
 export default function Home() {
+
+  const [categoryList, setCategoryList] = useState();
 
   const router = useRouter()
 
@@ -49,10 +52,12 @@ export default function Home() {
 
     const user = await client.getUserDetails();
     const {data, error} = await supabase.from('Category')
-    .select('*')
+    .select('*,CategoryItems(*)')
     .eq('created_by', user.email)
 
     console.log("data", data)
+    setCategoryList(data);
+
 
    } 
 
@@ -68,6 +73,7 @@ export default function Home() {
       <View style={styles.container}>
         <Header />
         <CircularChart />
+        <CategoryList categoryList={categoryList} />
         
       </View>
 
