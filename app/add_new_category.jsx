@@ -8,6 +8,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {client} from './../utils/KindeConfig.jsx'
 
 import {supabase} from './../utils/SupabaseConfig.jsx'
+import { useRouter } from 'expo-router';
 
 const AddNewCategory = () => {
 
@@ -15,6 +16,8 @@ const AddNewCategory = () => {
     const [selectedColor, setSelectedColor] = useState(Colors.PRIMARY)
     const [categoryName, setCategoryName] = useState();
     const [totalBudget, setTotalBudget] = useState();
+
+    const router = useRouter()
 
     const onCreateCategory = async () => {
    
@@ -33,6 +36,12 @@ const AddNewCategory = () => {
         console.log(data);
         if(data)
         {
+          router.replace({
+            pathname : '/category-detail',
+            params : {
+              categoryId : data[0].id
+            }
+          })
           ToastAndroid.show('Category Created!', ToastAndroid.SHORT)
         }
 

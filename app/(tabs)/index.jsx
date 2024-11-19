@@ -1,8 +1,8 @@
-import { View, Text, Pressable, Touchable, StyleSheet } from 'react-native'
+import { View, Text, Pressable, Touchable,RefreshControl, StyleSheet , ScrollView, Button} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import services from './../../utils/services'
 import {Link, useRouter} from 'expo-router'
-import { Button } from 'react-native-web'
+
 import { client } from './../../utils/KindeConfig'
 import { TouchableOpacity } from 'react-native'
 import {supabase} from '../../utils/SupabaseConfig'
@@ -14,11 +14,13 @@ import CategoryList from '../../components/CategoryList'
 
 
 
+
 export default function Home() {
 
   const [categoryList, setCategoryList] = useState();
 
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
 
     /*
     Used to check user is already auth or not
@@ -49,7 +51,7 @@ export default function Home() {
     };
 
    const getCategoryList = async () => {
-
+    setLoading(true)
     const user = await client.getUserDetails();
     const {data, error} = await supabase.from('Category')
     .select('*,CategoryItems(*)')
@@ -57,6 +59,7 @@ export default function Home() {
 
     console.log("data", data)
     setCategoryList(data);
+    data&&setLoading(false)
 
 
    } 
@@ -70,12 +73,25 @@ export default function Home() {
       flex : 1,
     }}>
 
+     <ScrollView
+      refreshControl={
+        <RefreshControl 
+         onRefresh={() => getCategoryList()}
+         refreshing ={loading}
+        />
+      }
+     >
       <View style={styles.container}>
-        <Header />
+          <Header />
+      </View>
+      <View style={{
+        padding : 20,
+        marginTop : -80,
+      }}>
         <CircularChart />
         <CategoryList categoryList={categoryList} />
-        
       </View>
+     </ScrollView>
 
 
       <Link href='/add_new_category' style={styles.addBtnContainer}>
