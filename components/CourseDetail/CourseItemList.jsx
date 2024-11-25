@@ -9,7 +9,7 @@ const CourseItemList = ({categoryData}) => {
 
       <View style={{marginTop : 15}}>
         {categoryData?.CategoryItems?.length>0 ? categoryData?.CategoryItems?.map((item, index) => (
-         <>
+         <View key={index}>
             <View key={index} style={styles.itemContainer}>
                <Image source={{uri : item.Image}}  style={styles.image}/>
                <View style={{flex:1, marginLeft : 10}}>
@@ -23,7 +23,7 @@ const CourseItemList = ({categoryData}) => {
            <View style={{borderWidth : 0.5, marginTop : 10, borderColor : Colors.GRAY}}></View>
            }
 
-         </>
+         </View>
         )):
         <Text style={styles.noItemText}>No Item Found</Text>
     
@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
         display : 'flex',
         flexDirection : 'row',
         justifyContent : 'space-between',
-        alignItems : 'center'
+        alignItems : 'center',
+        marginTop : 10
     },
 
     name : {

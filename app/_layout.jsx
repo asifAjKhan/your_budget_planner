@@ -56,6 +56,15 @@ const HomeLayout = () => {
         }}
        />
 
+      <Stack.Screen 
+        name='add-new-category-item'
+        options={{
+          presentation : 'modal',
+          headerShown : true ,
+          headerTitle : 'Add New Category Item'
+        }}
+       />
+
     </Stack>
   )
 }
