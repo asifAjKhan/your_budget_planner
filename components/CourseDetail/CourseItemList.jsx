@@ -1,13 +1,14 @@
-import { View, Text , StyleSheet, Image} from 'react-native'
+import { View, Text,ScrollView , StyleSheet, Image} from 'react-native'
 import React from 'react'
 import Colors from '../../utils/Colors'
+
 
 const CourseItemList = ({categoryData}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Item List</Text>
 
-      <View style={{marginTop : 15}}>
+      <ScrollView style={{marginTop : 15}}>
         {categoryData?.CategoryItems?.length>0 ? categoryData?.CategoryItems?.map((item, index) => (
          <View key={index}>
             <View key={index} style={styles.itemContainer}>
@@ -28,7 +29,7 @@ const CourseItemList = ({categoryData}) => {
         <Text style={styles.noItemText}>No Item Found</Text>
     
     }
-      </View>
+      </ScrollView>
 
     </View>
   )

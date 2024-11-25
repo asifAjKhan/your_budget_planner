@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet,TextInput, Touchable, TouchableOpacity, ToastAndroid } from 'react-native'
+import { View,ActivityIndicator, Text, StyleSheet,TextInput, Touchable, TouchableOpacity, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import Colors from '../utils/Colors'
 import ColorPicker from '../components/ColorPicker'
@@ -10,6 +10,7 @@ import {client} from './../utils/KindeConfig.jsx'
 import {supabase} from './../utils/SupabaseConfig.jsx'
 import { useRouter } from 'expo-router';
 
+
 const AddNewCategory = () => {
 
     const [selectedIcon, setSelectedIcon] = useState('ic')
@@ -19,7 +20,11 @@ const AddNewCategory = () => {
 
     const router = useRouter()
 
+    const [loading,setLoading] = useState(false)
+
     const onCreateCategory = async () => {
+
+      setLoading(true)
    
       
       try{
@@ -42,10 +47,12 @@ const AddNewCategory = () => {
               categoryId : data[0].id
             }
           })
+          setLoading(false)
           ToastAndroid.show('Category Created!', ToastAndroid.SHORT)
         }
 
       }catch(err){
+        setLoading(false)
         console.log(err)
       }
       
@@ -99,14 +106,16 @@ const AddNewCategory = () => {
 
       <TouchableOpacity 
       style={styles.button}
-      disabled={!categoryName && !totalBudget}
+      disabled={!categoryName || !totalBudget || loading}
       onPress={() => onCreateCategory()}
       >
+
+        {loading ? <ActivityIndicator  color={Colors.WHITE}/> : 
         <Text style={{
           textAlign : 'center',
           fontSize : 16,
           color : Colors.WHITE
-        }}>Create</Text>
+        }}>Create</Text> }
       </TouchableOpacity>
      
     </View>

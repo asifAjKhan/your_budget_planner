@@ -5,7 +5,8 @@ import {
    Image, TextInput,
     TouchableOpacity,
     KeyboardAvoidingView,
-    ToastAndroid
+    ToastAndroid,
+    ActivityIndicator
   } from 'react-native'
 import React, { useState } from 'react'
 import Colors from '../utils/Colors'
@@ -33,6 +34,7 @@ const AddNewCategoryItem = () => {
   const [url, setUrl] = useState()
   const [cost, setCost] = useState()
   const [note, setNote] = useState()
+  const [loading,setLoading] = useState(false);
 
   const router = useRouter()
 
@@ -56,6 +58,8 @@ const AddNewCategoryItem = () => {
   }
 
   const onClickAdd = async () => {
+
+    setLoading(true)
 
     const fileName = Date.now();
       const { data, error } = await supabase
@@ -136,10 +140,14 @@ const AddNewCategoryItem = () => {
 
         <TouchableOpacity 
         style={styles.button} 
-        disabled={!name || !cost}
+        disabled={!name || !cost || loading}
         onPress={() => onClickAdd()}
         >
-          <Text style={{textAlign : 'center', fontWeight : 'bold', color: Colors.WHITE}}>Add</Text>
+
+          {loading ? 
+
+           <ActivityIndicator  color={Colors.WHITE} /> : <Text style={{textAlign : 'center', fontWeight : 'bold', color: Colors.WHITE}}>Add</Text>
+          }
         </TouchableOpacity>
 
 
